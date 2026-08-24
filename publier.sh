@@ -44,10 +44,10 @@ echo
 echo "GitHub construit le .dmg et le .exe. Compte 8 a 10 minutes."
 echo "Suivi : ${BLEU}https://github.com/$REPO/actions${FIN}"
 echo
-echo "${GRAS}Ensuite, colle ces deux lignes dans Vercel${FIN}"
-echo "  (projet liaison > Settings > Environment Variables, puis Redeploy)"
+echo "${GRAS}Rien d autre a faire.${FIN} Le site connait deja ces adresses :"
+echo "  mac   ${BLEU}https://github.com/$REPO/releases/download/v$VERSION/Liaison-$VERSION-arm64.dmg${FIN}"
+echo "  intel ${BLEU}https://github.com/$REPO/releases/download/v$VERSION/Liaison-$VERSION-x64.dmg${FIN}"
+echo "  win   ${BLEU}https://github.com/$REPO/releases/download/v$VERSION/Liaison-Setup-$VERSION.exe${FIN}"
 echo
-echo "  DOWNLOAD_MAC = ${BLEU}https://github.com/$REPO/releases/download/v$VERSION/Liaison-$VERSION-arm64.dmg${FIN}"
-echo "  DOWNLOAD_WIN = ${BLEU}https://github.com/$REPO/releases/download/v$VERSION/Liaison-Setup-$VERSION.exe${FIN}"
-echo
-echo "Le bouton Telecharger de https://liaison-gamma-five.vercel.app sera alors actif."
+echo "Des que la construction est verte, le bouton Telecharger de"
+echo "${BLEU}https://liaison-gamma-five.vercel.app${FIN} sert le fichier."

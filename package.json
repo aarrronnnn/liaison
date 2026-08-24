@@ -1,13 +1,13 @@
 {
   "name": "liaison",
   "productName": "Liaison",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Widget de cabine — suggestions d'enchaînement en direct pour DJ",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
-    "dist:mac": "electron-builder --mac --arm64 --x64",
-    "dist:win": "electron-builder --win --x64"
+    "dist:mac": "electron-builder --mac --arm64 --x64 --publish never",
+    "dist:win": "electron-builder --win --x64 --publish never"
   },
   "author": "Liaison",
   "license": "UNLICENSED",
