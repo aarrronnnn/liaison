@@ -1,0 +1,194 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Liaison — le morceau d'après, avant que tu le cherches</title>
+<meta name="description" content="Widget de cabine pour DJ. Suggestions d'enchaînement en direct : harmonie, tempo, timbre, énergie de la salle. Rekordbox, Serato, Traktor, VirtualDJ.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+:root{--paper:#EDEDEF;--card:#FFF;--card2:#F7F7F9;--ink:#0E1013;--ink2:#575C63;--ink3:#8A9099;
+--line:#DBDBE0;--blue:#1B27D4;--blue2:#141DA0;--rose:#C0392B;
+--d:Syne,"Helvetica Neue",Arial,sans-serif;--b:"Instrument Sans",system-ui,sans-serif;--m:"DM Mono",ui-monospace,Menlo,monospace}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--paper:#0B0C0E;--card:#131519;--card2:#101216;--ink:#ECEDEF;--ink2:#9CA2AA;--ink3:#6D747D;--line:#242832;--blue:#6E7BFF;--blue2:#8C97FF;--rose:#E0654F}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--b);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--d);margin:0;letter-spacing:-.03em;text-wrap:balance;font-weight:700}
+a{color:inherit}
+.wrap{max-width:1060px;margin:0 auto;padding-inline:clamp(18px,4vw,48px)}
+.lbl{font-family:var(--m);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3)}
+.mono{font-family:var(--m)}
+
+.top{border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--paper);z-index:10}
+.top .wrap{display:flex;align-items:center;gap:20px;height:64px}
+.mark{display:flex;align-items:center;gap:11px;text-decoration:none}
+.mark svg{width:32px;height:20px;color:var(--ink)}
+.mark span{font-family:var(--d);font-weight:700;font-size:15px;letter-spacing:.28em;text-transform:uppercase}
+.btn{font-family:var(--m);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:11px 18px;border-radius:2px;
+border:1px solid var(--blue);background:var(--blue);color:#fff;text-decoration:none;display:inline-block;cursor:pointer;transition:.16s}
+.btn:hover{background:var(--blue2);border-color:var(--blue2)}
+.btn.g{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.g:hover{border-color:var(--ink);background:transparent}
+.top .btn{margin-left:auto}
+
+.hero{padding-block:clamp(48px,8vw,96px)}
+.hero h1{font-family:var(--d);font-weight:800;font-size:clamp(36px,6vw,70px);line-height:1;letter-spacing:-.045em;max-width:15ch}
+.hero h1 em{font-style:normal;color:var(--ink3)}
+.hero p{margin-top:26px;max-width:56ch;font-size:clamp(16px,1.5vw,18.5px);color:var(--ink2)}
+.acts{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:30px}
+.acts .fine{font-family:var(--m);font-size:11px;color:var(--ink3)}
+
+.banner{border:1px solid var(--rose);border-radius:4px;padding:14px 18px;margin-top:22px;display:none;font-size:14px}
+.banner.on{display:block}
+.banner b{color:var(--rose)}
+
+.grid{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-top:clamp(36px,5vw,60px)}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:760px){.g3{grid-template-columns:minmax(0,1fr)}}
+.cell{background:var(--card);padding:22px}
+.cell h3{font-size:16px;margin-top:12px}
+.cell p{margin:9px 0 0;color:var(--ink2);font-size:14.5px;line-height:1.6}
+.cell .lbl{color:var(--blue)}
+
+section{padding-block:clamp(44px,6vw,80px)}
+.hr{height:1px;background:var(--line);margin-bottom:22px}
+.shead{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(20px,4vw,56px);align-items:start;margin-bottom:clamp(24px,4vw,40px)}
+@media(max-width:820px){.shead{grid-template-columns:minmax(0,1fr)}}
+.shead h2{font-family:var(--d);font-weight:800;font-size:clamp(24px,3.6vw,40px);line-height:1;letter-spacing:-.04em;max-width:17ch}
+.shead p{margin:0;color:var(--ink2);max-width:48ch;font-size:15.5px}
+
+.tiers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+@media(max-width:1000px){.tiers{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.tiers{grid-template-columns:minmax(0,1fr)}}
+.tier{background:var(--card);padding:24px 22px;display:flex;flex-direction:column}
+.tier.feat{background:var(--card2);box-shadow:inset 0 2px 0 var(--blue)}
+.tier h3{font-size:13px;text-transform:uppercase;letter-spacing:.16em}
+.price{font-family:var(--d);font-weight:700;font-size:34px;margin-top:16px;letter-spacing:-.04em;line-height:1}
+.price small{font-family:var(--m);font-size:11px;font-weight:400;color:var(--ink3);letter-spacing:0}
+.price.q{font-size:23px}
+.tier ul{list-style:none;padding:0;margin:18px 0 22px;display:flex;flex-direction:column;gap:9px;flex:1}
+.tier li{font-size:13.5px;color:var(--ink2);padding-left:15px;position:relative;line-height:1.5}
+.tier li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:1px;background:var(--blue)}
+.tier .btn{text-align:center}
+
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:4px}
+th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--m);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:400}
+td.k{font-family:var(--m);font-size:12.5px;color:var(--ink)}
+
+footer{border-top:1px solid var(--line);padding-block:34px;margin-top:20px}
+.fg{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-end}
+</style></head><body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="l" viewBox="0 0 44 26">
+<path d="M5 16.5C5 5 39 5 39 16.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+<circle cx="5" cy="21.4" r="2.7" fill="currentColor"/><circle cx="39" cy="21.4" r="2.7" fill="currentColor"/>
+</symbol></svg>
+
+<header class="top"><div class="wrap">
+  <a class="mark" href="/"><svg><use href="#l"></use></svg><span>Liaison</span></a>
+  <a class="btn" href="/telecharger">Télécharger</a>
+</div></header>
+
+<main>
+<section class="hero"><div class="wrap">
+  <span class="lbl">Widget de cabine — Rekordbox · Serato · Traktor · VirtualDJ</span>
+  <h1 style="margin-top:22px">Le morceau d'après,<br><em>avant que tu le cherches.</em></h1>
+  <p>Liaison lit ton deck en direct et ne retient que les titres de ta bibliothèque qui s'enchaînent vraiment : harmonie, tempo, timbre, énergie de la salle. Une liste courte, en moins d'une seconde.</p>
+  <div class="acts">
+    <a class="btn" href="/telecharger" style="padding:15px 26px;font-size:12px">Télécharger</a>
+    <span class="fine" id="ver">macOS et Windows · Version 0.4.0 · 14 jours d'essai</span>
+  </div>
+  <p class="fine" style="font-family:var(--m);font-size:11.5px;color:var(--ink3);margin:16px 0 0">
+    Tu as un code&nbsp;? L'app te le demande à l'ouverture. ·
+    <a href="/premiere-ouverture.html" style="color:var(--ink3)">Première ouverture</a>
+  </p>
+  <div class="banner" id="banner"></div>
+
+  <div class="grid g3">
+    <div class="cell"><span class="lbl">Sans import</span><h3>Il lit ta bibliothèque tout seul</h3>
+      <p>Serato, Traktor, VirtualDJ : Liaison lit la base du logiciel directement. Rien à exporter, rien à glisser. Ce qui manque est analysé en local.</p></div>
+    <div class="cell"><span class="lbl">Sans y penser</span><h3>Il s'ouvre avec ton logiciel</h3>
+      <p>Le widget apparaît quand tu lances ta cabine et disparaît quand tu la fermes. Entre les deux, une icône dans la barre de menus.</p></div>
+    <div class="cell"><span class="lbl">Hors-ligne</span><h3>Le club n'a pas de wifi</h3>
+      <p>Analyse locale, moteur local, licence en cache 30 jours. Aucune requête réseau pendant le set.</p></div>
+  </div>
+</div></section>
+
+<section id="licences"><div class="wrap">
+  <div class="hr"></div>
+  <div class="shead">
+    <h2>Licence à la soirée ou à l'année</h2>
+    <p>Liaison se loue. Tu ne mixes qu'un week-end sur deux ? Prends un pass. Tu es résident ? Prends le mois. Aucune licence n'expire en plein set : le pass couvre la nuit entière.</p>
+  </div>
+
+  <div class="tiers">
+    <div class="tier">
+      <h3>Pass soirée</h3>
+      <div class="price">9 €<small> / 14 h</small></div>
+      <ul><li>Une nuit complète</li><li>Widget et moteur complets</li><li>Une session, une machine</li>
+        <li>Demandes invités par QR</li><li>Sans engagement, sans abonnement</li></ul>
+      <a class="btn g" href="/acheter/pass">Prendre un pass</a>
+    </div>
+    <div class="tier feat">
+      <h3>Résident</h3>
+      <div class="price">19 €<small> / mois</small></div>
+      <ul><li>Bibliothèque illimitée</li><li>Sessions illimitées et ADN invités</li>
+        <li>Courbe de soirée, pont, rattrapage</li><li>Rejeu de set réarrangé</li>
+        <li>Deux machines — portable et cabine</li><li>14 jours d'essai, résiliable en un clic</li></ul>
+      <a class="btn" href="/acheter/resident">Commencer l'essai</a>
+    </div>
+    <div class="tier">
+      <h3>Collectif</h3>
+      <div class="price">49 €<small> / mois</small></div>
+      <ul><li>Jusqu'à cinq DJs</li><li>Bibliothèques partagées, mode B2B</li>
+        <li>Page de demande brandée par client</li><li>Facturation unique, licences transférables</li>
+        <li>14 jours d'essai</li></ul>
+      <a class="btn g" href="/acheter/collectif">Commencer l'essai</a>
+    </div>
+    <div class="tier">
+      <h3>Club &amp; festival</h3>
+      <div class="price q">Sur devis</div>
+      <ul><li>Licence par cabine, DJs invités inclus</li><li>Installation sur le réseau du club</li>
+        <li>Programmation multi-scènes</li><li>Exports droits d'auteur</li></ul>
+      <a class="btn g" href="mailto:contact@liaison.dj?subject=Devis%20club">Demander un devis</a>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="hr"></div>
+  <div class="shead">
+    <h2>Ce que chaque logiciel permet vraiment</h2>
+    <p>Il y a une différence que personne n'explique : le morceau <em>chargé</em> sur un deck et le morceau <em>joué</em>. Un seul protocole expose le premier.</p>
+  </div>
+  <table>
+    <thead><tr><th>Source</th><th>Détecte</th><th>Latence</th><th>Réglage</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Pro DJ Link — rekordbox, CDJ</td><td>le morceau <b>chargé</b></td><td class="k">immédiate</td><td>aucun, écoute passive du réseau cabine</td></tr>
+      <tr><td class="k">Serato DJ Pro</td><td>le morceau joué</td><td class="k">~1,5 s</td><td>aucun</td></tr>
+      <tr><td class="k">VirtualDJ</td><td>le morceau joué</td><td class="k">~1,5 s</td><td>aucun</td></tr>
+      <tr><td class="k">Traktor Pro</td><td>le morceau joué</td><td class="k">immédiate</td><td>Broadcasting sur 127.0.0.1:8000</td></tr>
+      <tr><td class="k">Bouton loupe du widget</td><td>ce que tu déclares</td><td class="k">immédiate</td><td>marche même en vinyle</td></tr>
+    </tbody>
+  </table>
+</div></section>
+</main>
+
+<footer><div class="wrap fg">
+  <div><a class="mark" href="/"><svg><use href="#l"></use></svg><span>Liaison</span></a>
+    <p class="lbl" style="margin-top:10px">L'art de passer d'un morceau à l'autre.</p></div>
+  <div class="lbl" style="text-align:right;line-height:2"><a href="/premiere-ouverture.html">Première ouverture</a> · macOS 13+ · Windows 11<br>Paiement sécurisé par Stripe</div>
+</div></footer>
+
+<script>
+fetch('/api/etat').then(r => r.json()).then(s => {
+  if (s.version) document.getElementById('ver').textContent =
+    "macOS et Windows \u00b7 Version " + s.version + " \u00b7 14 jours d'essai";
+  if (!s.telechargement) {
+    const b = document.getElementById('banner');
+    b.className = 'banner on';
+    b.innerHTML = "<b>Le binaire arrive.</b> Le reste du site tourne d\u00e9j\u00e0 : " +
+      "les codes sont actifs et l'activation des licences r\u00e9pond.";
+  }
+}).catch(() => {});
+</script>
+</body></html>

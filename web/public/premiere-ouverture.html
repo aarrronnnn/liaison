@@ -1,0 +1,82 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Première ouverture — Liaison</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+:root{--paper:#EDEDEF;--card:#FFF;--ink:#0E1013;--ink2:#575C63;--ink3:#8A9099;--line:#DBDBE0;--blue:#1B27D4;--blue2:#141DA0;--rose:#C0392B;
+--d:Syne,"Helvetica Neue",Arial,sans-serif;--b:"Instrument Sans",system-ui,sans-serif;--m:"DM Mono",ui-monospace,Menlo,monospace}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--paper:#0B0C0E;--card:#131519;--ink:#ECEDEF;--ink2:#9CA2AA;--ink3:#6D747D;--line:#242832;--blue:#6E7BFF;--blue2:#8C97FF;--rose:#E0654F}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--b);font-size:16px;line-height:1.6}
+.wrap{max-width:760px;margin:0 auto;padding:clamp(28px,5vw,64px) clamp(18px,4vw,40px) 80px}
+h1{font-family:var(--d);font-weight:800;font-size:clamp(28px,5vw,44px);letter-spacing:-.04em;margin:22px 0 12px;line-height:1.02}
+h2{font-family:var(--d);font-weight:700;font-size:clamp(19px,2.6vw,24px);letter-spacing:-.03em;margin:38px 0 4px}
+p{color:var(--ink2);margin:0 0 16px}
+.mark{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink)}
+.mark svg{width:30px;height:19px}
+.mark span{font-family:var(--d);font-weight:700;font-size:14px;letter-spacing:.28em;text-transform:uppercase}
+.lbl{font-family:var(--m);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3)}
+ol{padding-left:22px;margin:0 0 18px}
+li{margin-bottom:10px;color:var(--ink2)}
+li b{color:var(--ink)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:5px;padding:20px 22px;margin:18px 0}
+.card.warn{border-color:var(--rose)}
+code,.cmd{font-family:var(--m);font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:3px;padding:2px 6px}
+.cmd{display:block;padding:14px 16px;margin:12px 0;overflow-x:auto;white-space:pre;color:var(--ink)}
+.btn{font-family:var(--m);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:11px 18px;border-radius:2px;
+border:1px solid var(--blue);background:var(--blue);color:#fff;text-decoration:none;display:inline-block;cursor:pointer}
+.btn.g{background:transparent;color:var(--ink);border-color:var(--line)}
+.row{display:flex;gap:9px;flex-wrap:wrap;margin-top:8px}
+.why{border-left:2px solid var(--blue);padding-left:16px;margin:22px 0;color:var(--ink2);font-size:15px}
+.why b{color:var(--ink)}
+</style></head><body><div class="wrap">
+
+<a class="mark" href="/"><svg viewBox="0 0 44 26" fill="none"><path d="M5 16.5C5 5 39 5 39 16.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="5" cy="21.4" r="2.7" fill="currentColor"/><circle cx="39" cy="21.4" r="2.7" fill="currentColor"/></svg><span>Liaison</span></a>
+
+<h1>Première ouverture</h1>
+<p>Liaison s'installe comme n'importe quelle app. La seule différence est au tout premier lancement : l'app n'est pas encore signée par Apple ni Microsoft, donc le système demande une confirmation. Une fois. Ensuite elle s'ouvre comme les autres.</p>
+
+<div class="why"><b>Pourquoi ?</b> Faire signer une app coûte 99 $/an chez Apple et demande une validation chez Microsoft. Tant que Liaison est en test, on s'en passe — et le système fait son travail en prévenant. C'est normal, ce n'est pas un problème sur ton ordinateur.</div>
+
+<h2>macOS</h2>
+<ol>
+  <li>Ouvre le <b>.dmg</b> téléchargé, glisse <b>Liaison</b> dans <b>Applications</b>.</li>
+  <li>Dans Applications, <b>clic droit sur Liaison → Ouvrir</b>. Ne double-clique pas : ça ne proposera pas l'option.</li>
+  <li>Une fenêtre dit que le développeur n'est pas identifié. Clique <b>Ouvrir</b>.</li>
+  <li>C'est fini. Les fois suivantes, un double-clic suffit.</li>
+</ol>
+
+<div class="card warn">
+  <span class="lbl">Si macOS dit « Liaison est endommagée et ne peut pas être ouverte »</span>
+  <p style="margin-top:10px">Ce message trompeur veut simplement dire « téléchargée depuis Internet et non signée ». Ouvre le <b>Terminal</b> (Applications → Utilitaires) et colle cette ligne, puis Entrée :</p>
+  <span class="cmd">xattr -dr com.apple.quarantine /Applications/Liaison.app</span>
+  <p style="margin:0">Puis rouvre l'app normalement. Cette commande retire seulement l'étiquette « vient d'Internet » posée par le navigateur.</p>
+</div>
+
+<h2>Windows</h2>
+<ol>
+  <li>Lance le <b>.exe</b> téléchargé.</li>
+  <li>SmartScreen affiche « Windows a protégé votre ordinateur ». Clique <b>Informations complémentaires</b>, puis <b>Exécuter quand même</b>.</li>
+  <li>L'installation se déroule normalement. Les fois suivantes, plus aucune alerte.</li>
+</ol>
+
+<h2>Une fois ouverte</h2>
+<ol>
+  <li>L'app s'ouvre sur son écran d'accueil et démarre les <b>14 jours d'essai</b>, ou te demande ton code.</li>
+  <li>Elle vit ensuite dans la <b>barre de menus</b> (en haut à droite sur Mac, près de l'horloge sur Windows), et son icône reste dans tes Applications.</li>
+  <li>Elle lit ta bibliothèque toute seule — Serato, Traktor, VirtualDJ, ou ton dossier de musique. Compte quelques minutes la première fois.</li>
+  <li><b>Lance ton logiciel de mix.</b> Le widget apparaît à ce moment-là, et disparaît quand tu le fermes.</li>
+  <li>Charge un morceau : les suggestions arrivent.</li>
+</ol>
+
+<div class="card">
+  <span class="lbl">Tu as un code</span>
+  <p style="margin-top:10px">L'app te le demande d'elle-même à la première ouverture : clique <b>J'ai un code</b>, colle-le, c'est fini. Aucune carte bancaire, aucun compte à créer.</p>
+  <div class="row"><a class="btn g" href="/">Retour au site</a><a class="btn" href="/telecharger">Télécharger</a></div>
+</div>
+
+<h2>Ça ne marche pas</h2>
+<p>Le widget n'apparaît pas : vérifie que ton logiciel de mix est bien lancé, et regarde l'icône dans la barre de menus — elle indique ce que Liaison a détecté. Aucune suggestion : la bibliothèque est peut-être encore en cours d'analyse, l'état s'affiche en bas du widget.</p>
+
+</div></body></html>

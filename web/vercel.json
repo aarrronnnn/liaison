@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "rewrites": [
+    { "source": "/telecharger", "destination": "/api/telecharger" },
+    { "source": "/acheter/:plan", "destination": "/api/checkout?plan=:plan" }
+  ]
+}
